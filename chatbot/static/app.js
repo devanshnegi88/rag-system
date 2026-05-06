@@ -29,7 +29,7 @@ async function sendQuery() {
         const data = await response.json();
 
         addMessage(
-            JSON.stringify(data.response, null, 2),
+            data.response,
             "bot"
         );
 
