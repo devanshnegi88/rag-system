@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Persona Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            RAG Intelligence
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Chat</a>
+
+            <a href="/persona">Persona</a>
+
+            <a href="/topics">Topics</a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <h1>User Persona</h1>
+
+        <!-- HABITS -->
+
+        <div class="card">
+
+            <h2>Habits</h2>
+
+            <pre>
+{{ persona.get("habits", {}) | tojson(indent=2) }}
+            </pre>
+
+        </div>
+
+        <!-- PERSONAL FACTS -->
+
+        <div class="card">
+
+            <h2>Personal Facts</h2>
+
+            <pre>
+{{ persona.get("personal_facts", {}) | tojson(indent=2) }}
+            </pre>
+
+        </div>
+
+        <!-- COMMUNICATION -->
+
+        <div class="card">
+
+            <h2>Communication Style</h2>
+
+            <pre>
+{{ persona.get("communication_style", {}) | tojson(indent=2) }}
+            </pre>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

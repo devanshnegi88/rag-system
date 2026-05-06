@@ -1,0 +1,13 @@
+{
+  "total_checkpoints": 1,
+  "checkpoint_size": 100,
+  "checkpoints": [
+    {
+      "checkpoint_id": 0,
+      "start_idx": 0,
+      "end_idx": 19,
+      "message_count": 20,
+      "summary": "Hi! How was your weekend? It was great! I went hiking on Sunday. Oh no, that sounds exhausting. I'm actually from San Francisco originally. I often go to this local caf\u00e9 near my office."
+    }
+  ]
+}

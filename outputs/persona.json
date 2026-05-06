@@ -1,0 +1,125 @@
+{
+  "habits": [],
+  "personal_facts": [
+    {
+      "fact": "an engineer",
+      "category": "state",
+      "evidence": [
+        9
+      ]
+    },
+    {
+      "fact": "senior software engineer",
+      "category": "occupation",
+      "evidence": [
+        11
+      ]
+    },
+    {
+      "fact": "actually",
+      "category": "state",
+      "evidence": [
+        13
+      ]
+    },
+    {
+      "fact": "actually from",
+      "category": "state",
+      "evidence": [
+        13
+      ]
+    },
+    {
+      "fact": "28 years",
+      "category": "state",
+      "evidence": [
+        15
+      ]
+    },
+    {
+      "fact": "Alex",
+      "category": "name",
+      "evidence": [
+        15
+      ]
+    },
+    {
+      "fact": "San Francisco",
+      "category": "location",
+      "evidence": [
+        15
+      ]
+    },
+    {
+      "fact": "coffee",
+      "category": "interest",
+      "evidence": [
+        17
+      ]
+    }
+  ],
+  "personality_traits": [
+    {
+      "trait": "positive sentiment",
+      "evidence": [
+        1,
+        2,
+        13,
+        17
+      ],
+      "strength": 0.2,
+      "signal_count": 4
+    },
+    {
+      "trait": "curious inquisitive",
+      "evidence": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        12,
+        14,
+        16,
+        18
+      ],
+      "strength": 0.45,
+      "signal_count": 9
+    },
+    {
+      "trait": "enthusiastic",
+      "evidence": [
+        0,
+        1,
+        2,
+        4,
+        6,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "strength": 0.65,
+      "signal_count": 13
+    }
+  ],
+  "communication_style": {
+    "avg_message_length": 59,
+    "message_length_variance": 386.34,
+    "emoji_usage": false,
+    "punctuation_style": "exclamatory",
+    "formality": "casual",
+    "verbosity": "normal",
+    "capitalization": "normal",
+    "evidence": {
+      "total_messages": 20,
+      "emoji_messages": 0,
+      "all_caps_messages": 0,
+      "avg_words_per_message": 11
+    }
+  }
+}
