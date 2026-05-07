@@ -32,7 +32,28 @@ class ConversationLoader:
             {timestamp, sender, content, message_index}
         """
         try:
-            df = pd.read_csv(self.csv_path)
+            # First peek at the file to see if it has a header
+            peek_df = pd.read_csv(self.csv_path, nrows=0)
+            
+            # Check if any known column name is in the header
+            known_cols = ['conversation', 'messages', 'text', 'content', 'date']
+            has_known_col = any(col.lower() in known_cols for col in peek_df.columns)
+            
+            if not has_known_col:
+                # Peek at the first column of the first row if we read it normally
+                test_df = pd.read_csv(self.csv_path, nrows=1)
+                if not test_df.empty:
+                    first_val = str(test_df.columns[0])
+                    # If the column name looks like a message (contains ':' or is long)
+                    if ':' in first_val or len(first_val) > 30:
+                        df = pd.read_csv(self.csv_path, header=None)
+                    else:
+                        df = pd.read_csv(self.csv_path)
+                else:
+                    df = pd.read_csv(self.csv_path)
+            else:
+                df = pd.read_csv(self.csv_path)
+                
             self.raw_data = df
         except FileNotFoundError:
             raise FileNotFoundError(f"CSV file not found: {self.csv_path}")
@@ -68,10 +89,25 @@ class ConversationLoader:
         
         # Try to get conversation data from various column names
         conv_text = None
-        for col_name in ['conversation', 'messages', 'text', 'content']:
+        
+        # Check known column names first
+        known_cols = ['conversation', 'messages', 'text', 'content']
+        for col_name in known_cols:
             if col_name in row and pd.notna(row[col_name]):
                 conv_text = row[col_name]
                 break
+        
+        # Fallback: if no known columns, try to find a column that contains text
+        if conv_text is None:
+            for val in row:
+                if isinstance(val, str) and (':' in val or len(val) > 20):
+                    conv_text = val
+                    break
+        
+        # Last resort: just use the first column if it's a string
+        if conv_text is None and not row.empty:
+            if isinstance(row.iloc[0], str):
+                conv_text = row.iloc[0]
         
         if conv_text is None:
             return messages
