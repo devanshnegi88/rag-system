@@ -17,7 +17,8 @@ class RAGIndexer:
     def __init__(self, embedding_model: str = 'all-MiniLM-L6-v2',
                  summarization_model: str = 'facebook/bart-large-cnn',
                  window_size: int = 5,
-                 checkpoint_size: int = 100):
+                 checkpoint_size: int = 100,
+                 gemini_api_key: str = None):
         """
         Initialize RAG indexer.
         
@@ -26,6 +27,7 @@ class RAGIndexer:
             summarization_model: Summarization model
             window_size: Sliding window size for topic detection
             checkpoint_size: Messages per checkpoint for summaries
+            gemini_api_key: Optional Gemini API key
         """
         self.embedding_model = embedding_model
         self.summarization_model = summarization_model
@@ -37,7 +39,8 @@ class RAGIndexer:
             window_size=window_size
         )
         self.summarizer = SummarizationEngine(
-            model_name=summarization_model
+            model_name=summarization_model,
+            gemini_api_key=gemini_api_key
         )
         self.retriever = HybridRetriever(
             model_name=embedding_model

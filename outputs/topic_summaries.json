@@ -1,235 +1,504 @@
 {
-  "total_topics": 16,
+  "total_topics": 36,
   "topics": [
     {
       "topic_id": 0,
-      "label": "Weekend & Great & Went",
-      "summary": "Hi! How was your weekend? It was great! I went hiking on Sunday. I usually do that every weekend. That sounds fun! Where do you hike? I often go to the local trails near my place. It's really peaceful.",
+      "label": "Learning & Python & Doing",
+      "summary": "The user reports that they are doing well and have recently begun learning the Python programming language. They express a goal of eventually getting into the field of machine learning.",
       "start_idx": 0,
       "end_idx": 4,
       "message_count": 5,
       "keywords": [
-        "weekend",
-        "great",
-        "went",
-        "hiking",
-        "sunday"
+        "learning",
+        "python",
+        "doing",
+        "well",
+        "thanks"
       ]
     },
     {
       "topic_id": 1,
-      "label": "Thinking & Camping & Haven",
-      "summary": "By the way, I've been thinking about camping. I haven't camped in years.",
+      "label": "Smart & Choice & Machine",
+      "summary": "That's a smart choice. AI and machine learning are growing fast.",
       "start_idx": 5,
       "end_idx": 5,
       "message_count": 1,
       "keywords": [
-        "thinking",
-        "camping",
-        "haven",
-        "camped",
-        "years"
+        "smart",
+        "choice",
+        "machine",
+        "learning",
+        "growing"
       ]
     },
     {
       "topic_id": 2,
-      "label": "Should & Try & Anyway",
-      "summary": "You should try it! Anyway, how's work been?",
+      "label": "Exactly & Spend & Most",
+      "summary": "Exactly. I spend most evenings watching coding tutorials.",
       "start_idx": 6,
       "end_idx": 6,
       "message_count": 1,
       "keywords": [
-        "should",
-        "try",
-        "anyway",
-        "work"
+        "exactly",
+        "spend",
+        "most",
+        "evenings",
+        "watching"
       ]
     },
     {
       "topic_id": 3,
-      "label": "Work & Pretty & Stressful",
-      "summary": "Work has been pretty stressful lately. I've been working late almost every day.",
+      "label": "Nice & Practice & Key",
+      "summary": "Nice! Practice is the key to improving quickly.",
       "start_idx": 7,
       "end_idx": 7,
       "message_count": 1,
       "keywords": [
-        "work",
-        "pretty",
-        "stressful",
-        "lately",
-        "working"
+        "nice",
+        "practice",
+        "key",
+        "improving",
+        "quickly"
       ]
     },
     {
       "topic_id": 4,
-      "label": "Sounds & Exhausting & Heavy",
-      "summary": "Oh no, that sounds exhausting. Do you have a heavy project?",
+      "label": "Code",
+      "summary": "Do you code too?",
       "start_idx": 8,
       "end_idx": 8,
       "message_count": 1,
       "keywords": [
-        "sounds",
-        "exhausting",
-        "heavy",
-        "project"
+        "code"
       ]
     },
     {
       "topic_id": 5,
-      "label": "Yeah & Launching & Product",
-      "summary": "Yeah, we're launching a new product. I'm an engineer on the team.",
+      "label": "Backend & Developer & Working",
+      "summary": "Yes, I'm a backend developer working with Flask and APIs.",
       "start_idx": 9,
       "end_idx": 9,
       "message_count": 1,
       "keywords": [
-        "yeah",
-        "launching",
-        "product",
-        "engineer",
-        "team"
+        "backend",
+        "developer",
+        "working",
+        "flask",
+        "apis"
       ]
     },
     {
       "topic_id": 6,
-      "label": "Exciting & Tell & More",
-      "summary": "That's exciting! Tell me more about it.",
+      "label": "Sounds & Interesting & Heard",
+      "summary": "That sounds interesting. I've heard Flask is beginner-friendly.",
       "start_idx": 10,
       "end_idx": 10,
       "message_count": 1,
       "keywords": [
-        "exciting",
-        "tell",
-        "more"
+        "sounds",
+        "interesting",
+        "heard",
+        "flask",
+        "beginner"
       ]
     },
     {
       "topic_id": 7,
-      "label": "Well & Work & Senior",
-      "summary": "Well, I work as a senior software engineer. The project involves AI and machine learning.",
+      "label": "Definitely & Build & Projects",
+      "summary": "It definitely is. You can build projects pretty quickly with it.",
       "start_idx": 11,
       "end_idx": 11,
       "message_count": 1,
       "keywords": [
-        "well",
-        "work",
-        "senior",
-        "software",
-        "engineer"
+        "definitely",
+        "build",
+        "projects",
+        "pretty",
+        "quickly"
       ]
     },
     {
       "topic_id": 8,
-      "label": "Wow & Interested",
-      "summary": "Wow! Are you interested in AI?",
+      "label": "Thinking & Creating & Chatbot",
+      "summary": "I'm thinking about creating a chatbot project.",
       "start_idx": 12,
       "end_idx": 12,
       "message_count": 1,
       "keywords": [
-        "wow",
-        "interested"
+        "thinking",
+        "creating",
+        "chatbot",
+        "project"
       ]
     },
     {
       "topic_id": 9,
-      "label": "Absolutely & Love & Read",
-      "summary": "Absolutely! I love AI. I read about it constantly. I'm actually from San Francisco originally.",
+      "label": "Great & Project & Idea",
+      "summary": "That's a great project idea for learning AI concepts.",
       "start_idx": 13,
       "end_idx": 13,
       "message_count": 1,
       "keywords": [
-        "absolutely",
-        "love",
-        "read",
-        "constantly",
-        "actually"
+        "great",
+        "project",
+        "idea",
+        "learning",
+        "concepts"
       ]
     },
     {
       "topic_id": 10,
-      "label": "Tech & Hub & Live",
-      "summary": "That's a tech hub! Do you live there now?",
+      "label": "Hopefully & Build & Something",
+      "summary": "Hopefully I can build something useful soon.",
       "start_idx": 14,
       "end_idx": 14,
       "message_count": 1,
       "keywords": [
-        "tech",
-        "hub",
-        "live",
-        "there"
+        "hopefully",
+        "build",
+        "something",
+        "useful",
+        "soon"
       ]
     },
     {
       "topic_id": 11,
-      "label": "Live & San & Francisco",
-      "summary": "I do! I live in San Francisco. I'm 28 years old. My name is Alex.",
+      "label": "Keep & Building & Consistently",
+      "summary": "Keep building consistently and you'll improve fast.",
       "start_idx": 15,
       "end_idx": 15,
       "message_count": 1,
       "keywords": [
-        "live",
-        "san",
-        "francisco",
-        "years",
-        "name"
+        "keep",
+        "building",
+        "consistently",
+        "improve",
+        "fast"
       ]
     },
     {
       "topic_id": 12,
-      "label": "Nice & Meet & Alex",
-      "summary": "Nice to meet you, Alex! Any hobbies besides hiking and work?",
+      "label": "Thanks & Motivation",
+      "summary": "Thanks for the motivation!",
       "start_idx": 16,
       "end_idx": 16,
       "message_count": 1,
       "keywords": [
-        "nice",
-        "meet",
-        "alex",
-        "any",
-        "hobbies"
+        "thanks",
+        "motivation"
       ]
     },
     {
       "topic_id": 13,
-      "label": "Coffee & Love & Always",
-      "summary": "I love coffee! I always have coffee in the morning. Can't start the day without it.",
+      "label": "Anytime & Learning & Tech",
+      "summary": "Anytime! Learning tech skills is always worth it.",
       "start_idx": 17,
       "end_idx": 17,
       "message_count": 1,
       "keywords": [
-        "coffee",
-        "love",
-        "always",
-        "morning",
-        "start"
+        "anytime",
+        "learning",
+        "tech",
+        "skills",
+        "always"
       ]
     },
     {
       "topic_id": 14,
-      "label": "Same & Here & Favorite",
-      "summary": "Same here! What's your favorite coffee?",
+      "label": "Prefer & Frontend & Backend",
+      "summary": "By the way, do you prefer frontend or backend work?",
       "start_idx": 18,
       "end_idx": 18,
       "message_count": 1,
       "keywords": [
-        "same",
-        "here",
-        "favorite",
-        "coffee"
+        "prefer",
+        "frontend",
+        "backend",
+        "work"
       ]
     },
     {
       "topic_id": 15,
-      "label": "Usually & Prefer & Dark",
-      "summary": "I usually prefer dark roast. I often go to this local caf\u00e9 near my office.",
+      "label": "Backend & Sure & Enjoy",
+      "summary": "Backend for sure. I enjoy solving logic and database problems.",
       "start_idx": 19,
       "end_idx": 19,
       "message_count": 1,
       "keywords": [
-        "usually",
-        "prefer",
-        "dark",
-        "roast",
-        "often"
+        "backend",
+        "sure",
+        "enjoy",
+        "solving",
+        "logic"
+      ]
+    },
+    {
+      "topic_id": 16,
+      "label": "Same & Here & Frontend",
+      "summary": "Same here. Frontend design feels difficult to me.",
+      "start_idx": 20,
+      "end_idx": 20,
+      "message_count": 1,
+      "keywords": [
+        "same",
+        "here",
+        "frontend",
+        "design",
+        "feels"
+      ]
+    },
+    {
+      "topic_id": 17,
+      "label": "Normal & Everyone & Different",
+      "summary": "That's normal. Everyone has different strengths.",
+      "start_idx": 21,
+      "end_idx": 21,
+      "message_count": 1,
+      "keywords": [
+        "normal",
+        "everyone",
+        "different",
+        "strengths"
+      ]
+    },
+    {
+      "topic_id": 18,
+      "label": "True & Enjoy & Working",
+      "summary": "True. I also enjoy working with databases.",
+      "start_idx": 22,
+      "end_idx": 22,
+      "message_count": 1,
+      "keywords": [
+        "true",
+        "enjoy",
+        "working",
+        "databases"
+      ]
+    },
+    {
+      "topic_id": 19,
+      "label": "Sql & Very & Valuable",
+      "summary": "SQL is a very valuable skill in development.",
+      "start_idx": 23,
+      "end_idx": 23,
+      "message_count": 1,
+      "keywords": [
+        "sql",
+        "very",
+        "valuable",
+        "skill",
+        "development"
+      ]
+    },
+    {
+      "topic_id": 20,
+      "label": "Currently & Learning & Mysql",
+      "summary": "I'm currently learning MySQL basics.",
+      "start_idx": 24,
+      "end_idx": 24,
+      "message_count": 1,
+      "keywords": [
+        "currently",
+        "learning",
+        "mysql",
+        "basics"
+      ]
+    },
+    {
+      "topic_id": 21,
+      "label": "Good & Choice & Understanding",
+      "summary": "Good choice. Understanding databases is extremely important.",
+      "start_idx": 25,
+      "end_idx": 25,
+      "message_count": 1,
+      "keywords": [
+        "good",
+        "choice",
+        "understanding",
+        "databases",
+        "extremely"
+      ]
+    },
+    {
+      "topic_id": 22,
+      "label": "Work & Remotely",
+      "summary": "Do you work remotely?",
+      "start_idx": 26,
+      "end_idx": 26,
+      "message_count": 1,
+      "keywords": [
+        "work",
+        "remotely"
+      ]
+    },
+    {
+      "topic_id": 23,
+      "label": "Mostly & Although & Sometimes",
+      "summary": "Mostly yes, although sometimes I visit the office.",
+      "start_idx": 27,
+      "end_idx": 27,
+      "message_count": 1,
+      "keywords": [
+        "mostly",
+        "although",
+        "sometimes",
+        "visit",
+        "office"
+      ]
+    },
+    {
+      "topic_id": 24,
+      "label": "Remote & Work & Sounds",
+      "summary": "Remote work sounds convenient.",
+      "start_idx": 28,
+      "end_idx": 28,
+      "message_count": 1,
+      "keywords": [
+        "remote",
+        "work",
+        "sounds",
+        "convenient"
+      ]
+    },
+    {
+      "topic_id": 25,
+      "label": "Staying & Disciplined & Challenging",
+      "summary": "It is, but staying disciplined can be challenging.",
+      "start_idx": 29,
+      "end_idx": 29,
+      "message_count": 1,
+      "keywords": [
+        "staying",
+        "disciplined",
+        "challenging"
+      ]
+    },
+    {
+      "topic_id": 26,
+      "label": "Imagine",
+      "summary": "I can imagine that.",
+      "start_idx": 30,
+      "end_idx": 30,
+      "message_count": 1,
+      "keywords": [
+        "imagine"
+      ]
+    },
+    {
+      "topic_id": 27,
+      "label": "Having & Proper & Routine",
+      "summary": "Having a proper routine helps a lot.",
+      "start_idx": 31,
+      "end_idx": 31,
+      "message_count": 1,
+      "keywords": [
+        "having",
+        "proper",
+        "routine",
+        "helps",
+        "lot"
+      ]
+    },
+    {
+      "topic_id": 28,
+      "label": "Remember",
+      "summary": "I'll remember that.",
+      "start_idx": 32,
+      "end_idx": 32,
+      "message_count": 1,
+      "keywords": [
+        "remember"
+      ]
+    },
+    {
+      "topic_id": 29,
+      "label": "Consistency & Matters & More",
+      "summary": "Consistency matters more than motivation.",
+      "start_idx": 33,
+      "end_idx": 33,
+      "message_count": 1,
+      "keywords": [
+        "consistency",
+        "matters",
+        "more",
+        "motivation"
+      ]
+    },
+    {
+      "topic_id": 30,
+      "label": "Actually & True",
+      "summary": "That's actually true.",
+      "start_idx": 34,
+      "end_idx": 34,
+      "message_count": 1,
+      "keywords": [
+        "actually",
+        "true"
+      ]
+    },
+    {
+      "topic_id": 31,
+      "label": "Most & Successful & Developers",
+      "summary": "Most successful developers just keep practicing regularly.",
+      "start_idx": 35,
+      "end_idx": 35,
+      "message_count": 1,
+      "keywords": [
+        "most",
+        "successful",
+        "developers",
+        "keep",
+        "practicing"
+      ]
+    },
+    {
+      "topic_id": 32,
+      "label": "Thanks & Advice",
+      "summary": "Thanks for the advice.",
+      "start_idx": 36,
+      "end_idx": 36,
+      "message_count": 1,
+      "keywords": [
+        "thanks",
+        "advice"
+      ]
+    },
+    {
+      "topic_id": 33,
+      "label": "Problem & Good & Luck",
+      "summary": "No problem! Good luck with your coding journey.",
+      "start_idx": 37,
+      "end_idx": 37,
+      "message_count": 1,
+      "keywords": [
+        "problem",
+        "good",
+        "luck",
+        "coding",
+        "journey"
+      ]
+    },
+    {
+      "topic_id": 34,
+      "label": "Appreciate & Lot",
+      "summary": "Appreciate it a lot.",
+      "start_idx": 38,
+      "end_idx": 38,
+      "message_count": 1,
+      "keywords": [
+        "appreciate",
+        "lot"
+      ]
+    },
+    {
+      "topic_id": 35,
+      "label": "Anytime",
+      "summary": "Anytime!",
+      "start_idx": 39,
+      "end_idx": 39,
+      "message_count": 1,
+      "keywords": [
+        "anytime"
       ]
     }
   ]

@@ -123,18 +123,20 @@ class ChatbotAPI:
         }
 
     def _classify_intent(self, query: str) -> str:
-        # Persona phrases
-        persona_phrases = ["what kind of person", "describe the user", "personality", "communication style", "what is this user like"]
-        # Habits phrases
-        habits_phrases = ["habits", "routine", "patterns"]
-        # Topic phrases
-        topic_phrases = ["topics", "subjects discussed", "conversation themes"]
+        query_lower = query.lower()
+        
+        # Persona and Identity keywords
+        persona_keywords = ["name", "who is", "describe", "personality", "traits", "profile", "style", "age", "how old", "live in", "work as", "job", "occupation"]
+        # Habits keywords
+        habits_keywords = ["habits", "routine", "usually", "patterns", "always"]
+        # Topic keywords
+        topic_keywords = ["topic", "subject", "theme", "talking about", "discussed"]
 
-        if any(p in query for p in persona_phrases):
+        if any(kw in query_lower for kw in persona_keywords):
             return "persona"
-        if any(p in query for p in habits_phrases):
+        if any(kw in query_lower for kw in habits_keywords):
             return "habits"
-        if any(p in query for p in topic_phrases):
+        if any(kw in query_lower for kw in topic_keywords):
             return "topic"
         
         return "general"
@@ -144,19 +146,57 @@ class ChatbotAPI:
     # =====================================================
 
     def _answer_persona_query(self, query: str) -> tuple:
-        """Synthesize persona response in third person."""
+        """Synthesize persona response in third person, with specific fact lookup."""
         persona = self.persona_extractor
+        query_lower = query.lower()
+        facts = persona.get('personal_facts', [])
         
+        # 1. SPECIFIC FACT LOOKUP
+        # Map query keywords to fact categories
+        category_map = {
+            'name': 'name',
+            'old': 'age',
+            'age': 'age',
+            'live': 'location',
+            'location': 'location',
+            'work': 'occupation',
+            'job': 'occupation',
+            'occupation': 'occupation',
+            'from': 'origin',
+            'born': 'origin'
+        }
+        
+        for keyword, category in category_map.items():
+            if keyword in query_lower:
+                # Find fact with this category
+                match = next((f for f in facts if f.get('category') == category), None)
+                if match:
+                    val = match.get('fact')
+                    if category == 'name':
+                        return f"The user name is {val}.", [{'type': 'persona', 'category': 'name'}]
+                    elif category == 'age':
+                        return f"The user age is {val}.", [{'type': 'persona', 'category': 'age'}]
+                    elif category == 'location':
+                        return f"The user lives in {val}.", [{'type': 'persona', 'category': 'location'}]
+                    elif category == 'occupation':
+                        return f"The user occupation is {val}.", [{'type': 'persona', 'category': 'occupation'}]
+                    elif category == 'origin':
+                        return f"The user is from {val}.", [{'type': 'persona', 'category': 'origin'}]
+                else:
+                    # If they asked for a specific fact and it's not found
+                    return f"The user hasn't mentioned their {category} in the conversations I've analyzed.", [{'type': 'persona'}]
+
+        # 2. GENERAL PERSONA SUMMARY (FALLBACK)
         traits = [t.get('trait', '') for t in persona.get('personality_traits', [])[:3]]
-        facts = [f.get('fact', '') for f in persona.get('personal_facts', [])[:2]]
+        fact_snippets = [f.get('fact', '') for f in facts[:2]]
         style = persona.get('communication_style', {})
         formality = style.get('formality', 'casual')
 
         response_parts = []
         if traits:
             response_parts.append(f"The user appears to be {', '.join(traits)}.")
-        if facts:
-            response_parts.append(f"They mentioned details such as {', '.join(facts)}.")
+        if fact_snippets:
+            response_parts.append(f"They mentioned details such as {', '.join(fact_snippets)}.")
         
         response_parts.append(f"Their communication style is generally {formality}.")
         
@@ -197,24 +237,49 @@ class ChatbotAPI:
         if not results:
             return "I couldn't find any information in the conversations to answer that.", []
 
-        # Format context as dialogue for the summarizer
+        # Format context as dialogue
         context = "\n".join([f"{r.get('sender', 'User')}: {r.get('content', '')}" for r in results])
 
         try:
             prompt = (
                 f"Question: {query}\n\n"
                 f"Based on these messages, explain what the user says about the question in the third person. "
-                f"Be concise.\n\n"
+                f"Start the response with 'The user is' or 'The user mentioned'.\n\n"
                 f"Messages:\n{context}"
             )
             synthesized = self.rag_indexer.summarizer.summarize_text(prompt, max_length=100)
             
-            if synthesized and len(synthesized) > 30:
-                response = synthesized
+            # Clean up potential prompt leakage and speaker labels
+            if synthesized:
+                # If the AI returned the whole prompt, try to extract just the answer
+                # (but avoid just returning the raw message context)
+                for noise in ["Question:", "Messages:", "Based on these messages", "Based on the messages", "The user says about"]:
+                    if noise in synthesized:
+                        synthesized = synthesized.split(noise)[-1].strip()
+                
+                # If it still looks like raw logs (labels at start of lines), it's a failed summary
+                import re
+                if len(re.findall(r'^(?:User \d+|Assistant|User):', synthesized, re.MULTILINE)) > 1:
+                    synthesized = ""
+                
+                # Remove speaker labels from the start (e.g., "User 1: ...")
+                synthesized = re.sub(r'^(User \d+|Assistant|User|the user):', '', synthesized, flags=re.IGNORECASE).strip()
+            
+            if synthesized and len(synthesized) > 15 and not synthesized.startswith("Question:"):
+                # Ensure third person prefix if not already present
+                if not any(synthesized.lower().startswith(p) for p in ["the user", "they", "he ", "she "]):
+                    response = f"The user mentioned that {synthesized[0].lower()}{synthesized[1:]}"
+                else:
+                    response = synthesized
             else:
                 # Use first relevant message as a clean fallback
                 content = results[0].get('content', '')
-                response = f"In the conversations, the user mentioned that '{content}'."
+                sender = results[0].get('sender', 'User')
+                if sender.lower() in ['user', 'user 1', 'user 2']:
+                    response = f"The {sender.lower()} mentioned: '{content}'."
+                else:
+                    response = f"The user mentioned: '{content}'."
+                    
         except Exception as e:
             logger.error(f"Summarization error: {e}")
             content = results[0].get('content', '')
@@ -225,7 +290,8 @@ class ChatbotAPI:
             sources.append({
                 'type': 'message',
                 'message_index': int(r.get('message_index', 0)),
-                'sender': str(r.get('sender', 'unknown'))
+                'sender': str(r.get('sender', 'unknown')),
+                'content': str(r.get('content', ''))[:100]
             })
 
         return response, sources

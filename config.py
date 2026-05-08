@@ -4,6 +4,10 @@ Configuration and initialization utilities for RAG system.
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Project root
 PROJECT_ROOT = Path(__file__).parent
@@ -24,6 +28,8 @@ RAG_CONFIG = {
     "checkpoint_size": 100,
     "similarity_threshold": 0.6,
     "retrieval_k": 5,
+    "use_gemini_fallback": True,
+    "gemini_api_key": os.environ.get("GEMINI_API_KEY", ""),
 }
 
 # Persona extraction config

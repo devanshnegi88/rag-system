@@ -25,6 +25,7 @@ from processing.loader import ConversationLoader
 from rag.indexing import RAGIndexer
 from persona.extractor import PersonaExtractor
 from chatbot.api import ChatbotAPI
+from config import RAG_CONFIG
 
 
 # Configure logging
@@ -90,10 +91,11 @@ def main():
         # Step 2: Build RAG system
         logger.info("Building RAG system...")
         rag_indexer = RAGIndexer(
-            embedding_model='all-MiniLM-L6-v2',
-            summarization_model='facebook/bart-large-cnn',
-            window_size=5,
-            checkpoint_size=100
+            embedding_model=RAG_CONFIG['embedding_model'],
+            summarization_model=RAG_CONFIG['summarization_model'],
+            window_size=RAG_CONFIG['topic_window_size'],
+            checkpoint_size=RAG_CONFIG['checkpoint_size'],
+            gemini_api_key=RAG_CONFIG.get('gemini_api_key')
         )
         
         rag_result = rag_indexer.build_rag_system(

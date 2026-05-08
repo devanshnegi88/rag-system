@@ -171,8 +171,11 @@ class PersonaExtractor:
         fact_patterns = [
             (r"i(?:'m| am) (\w+)", 'state'),
             (r"i(?:'m| am) (\w+ \w+)", 'state'),
-            (r"my name is (\w+)", 'name'),
+            (r"my name is ([^.!?\n]+)", 'name'),
+            (r"i am called ([^.!?\n]+)", 'name'),
             (r"i(?:'m| am) (\d+)", 'age'),
+            (r"i(?:'m| am) (\d+) years old", 'age'),
+            (r"i am (\d+) years of age", 'age'),
             (r"i live in ([^.!?\n]+)", 'location'),
             (r"i live at ([^.!?\n]+)", 'location'),
             (r"i work in ([^.!?\n]+)", 'occupation'),

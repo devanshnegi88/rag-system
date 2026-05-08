@@ -16,19 +16,32 @@ class SummarizationEngine:
     """
     
     def __init__(self, model_name: str = 'facebook/bart-large-cnn', 
-                 max_length: int = 150, min_length: int = 50):
+                 max_length: int = 150, min_length: int = 50,
+                 gemini_api_key: str = None):
         """
         Initialize summarization engine.
         
         Args:
-            model_name: Summarization model to use (for reference, using fallback)
-            max_length: Maximum summary length in tokens
-            min_length: Minimum summary length in tokens
+            model_name: Summarization model to use
+            max_length: Maximum summary length
+            min_length: Minimum summary length
+            gemini_api_key: Optional Google Gemini API key
         """
         self.model_name = model_name
         self.max_length = max_length
         self.min_length = min_length
         self.summarizer = None
+        self.gemini_model = None
+        
+        # Initialize Gemini if key provided
+        if gemini_api_key:
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=gemini_api_key)
+                self.gemini_model = genai.GenerativeModel('gemini-3-flash-preview')
+                logger.info("Gemini summarization initialized successfully.")
+            except Exception as e:
+                logger.error(f"Failed to initialize Gemini: {e}")
         
         # Try to load transformer pipeline, fallback to extractive summarization
         try:
@@ -64,7 +77,7 @@ class SummarizationEngine:
             # Generate summary
             if len(combined_text.split()) > 20:  # Only summarize if enough text
                 try:
-                    summary = self._summarize_text(combined_text)
+                    summary = self.summarize_text(combined_text)
                 except Exception as e:
                     logger.error(f"Error summarizing topic {topic['topic_id']}: {e}")
                     summary = self._fallback_summary(messages)
@@ -112,7 +125,7 @@ class SummarizationEngine:
             # Generate summary
             if len(combined_text.split()) > 20:
                 try:
-                    summary = self._summarize_text(combined_text)
+                    summary = self.summarize_text(combined_text)
                 except Exception as e:
                     logger.error(f"Error summarizing checkpoint {checkpoint_id}: {e}")
                     summary = self._fallback_summary(checkpoint_messages)
@@ -131,31 +144,49 @@ class SummarizationEngine:
         
         return checkpoints
     
-    def _summarize_text(self, text: str) -> str:
+    def summarize_text(self, text: str, max_length: int = None, min_length: int = None) -> str:
         """
-        Summarize text using transformer model or fallback extractive method.
+        Summarize text using transformer model, Gemini, or fallback extractive method.
+        """
+        # Use defaults if not provided
+        max_len = max_length if max_length is not None else self.max_length
+        min_len = min_length if min_length is not None else self.min_length
         
-        Args:
-            text: Text to summarize
-            
-        Returns:
-            Summary
-        """
-        # Truncate to avoid token limits
+        # Truncate to avoid token limits for local models
         words = text.split()
         if len(words) > 1024:
-            text = ' '.join(words[:1024])
+            text_truncated = ' '.join(words[:1024])
+        else:
+            text_truncated = text
         
-        # If transformer model is available, use it
+        # 1. Try Transformer model
         if self.summarizer is not None:
             try:
-                result = self.summarizer(text, max_length=self.max_length, 
-                                        min_length=self.min_length, do_sample=False)
+                result = self.summarizer(text_truncated, max_length=max_len, 
+                                        min_length=min_len, do_sample=False)
                 return result[0]['summary_text']
             except Exception as e:
-                logger.warning(f"Transformer summarization failed: {e}. Using extractive.")
+                logger.warning(f"Transformer summarization failed: {e}")
+
+        # 2. Try Gemini fallback
+        if self.gemini_model is not None:
+            try:
+                prompt = (
+                    f"You are an assistant describing a user's behavior and statements based on chat logs.\n"
+                    f"Answer the following question based ONLY on the provided messages.\n"
+                    f"Always use the third person (e.g., 'The user is...', 'They mentioned...').\n"
+                    f"IMPORTANT: Do not include speaker labels like 'User 1:' or 'Assistant:' in your response.\n"
+                    f"Question: {text.split('Question: ')[-1].split('\\n')[0] if 'Question: ' in text else 'Summarize the text.'}\n\n"
+                    f"Messages:\n{text.split('Messages:\\n')[-1] if 'Messages:\\n' in text else text}\n\n"
+                    f"Concise Answer:"
+                )
+                response = self.gemini_model.generate_content(prompt)
+                if response and response.text:
+                    return response.text.strip()
+            except Exception as e:
+                logger.error(f"Gemini summarization failed: {e}")
         
-        # Fallback: extractive summarization (take key sentences)
+        # 3. Fallback: extractive summarization
         return self._extractive_summary(text)
     
     def _extractive_summary(self, text: str) -> str:
@@ -168,9 +199,9 @@ class SummarizationEngine:
         Returns:
             Summary
         """
-        sentences = text.split('. ')
-        if len(sentences) <= 3:
-            return text
+        sentences = [s.strip() for s in text.split('. ') if s.strip()]
+        if len(sentences) <= 2:
+            return sentences[0] if sentences else text
         
         # Take first and last sentences, plus middle ones
         summary_sentences = []

@@ -150,7 +150,8 @@ def load_system(csv_filename: str = None):
             embedding_model=RAG_CONFIG['embedding_model'],
             summarization_model=RAG_CONFIG['summarization_model'],
             window_size=RAG_CONFIG['topic_window_size'],
-            checkpoint_size=RAG_CONFIG['checkpoint_size']
+            checkpoint_size=RAG_CONFIG['checkpoint_size'],
+            gemini_api_key=RAG_CONFIG.get('gemini_api_key')
         )
         
         result = rag_indexer.build_rag_system(
